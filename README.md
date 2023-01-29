@@ -1,5 +1,5 @@
 # Mouse Wiggler based on CH552E
-Mouse Wiggler is a tool that simulates movements of the mouse pointer so that no screen saver is activated and the PC or notebook is not put to sleep. Since the board can be used in many ways, it can also become a rubber ducky or a caps blocker with the additional firmware that is included. It is controlled via the touch key at the end of the board and displays its status via an addressable LED (NeoPixel).
+Mouse Wiggler is a tool that simulates movements of the mouse pointer so that no screen saver is activated and the PC or laptop is not put to sleep. Since the board can be used in many ways, it can also become a rubber ducky or a caps blocker with the additional firmware that is included. It is controlled via the touch key at the end of the board and displays its status via an addressable LED (NeoPixel).
 
 ![MouseWiggler_pic1.jpg](https://raw.githubusercontent.com/wagiminator/CH552-MouseWiggler/main/documentation/MouseWiggler_pic1.jpg)
 
@@ -14,27 +14,27 @@ The CH552E is a low-cost, enhanced E8051 core microcontroller compatible with th
 
 # Software
 ## Mouse Wiggler
-Mouse Wiggler is a tool that simulates movements of the mouse pointer so that no screen saver is activated and the PC or notebook is not put to sleep. The mouse pointer movements are imperceptibly small, so that you can continue to work normally on your PC even with the function activated.
+Mouse Wiggler is an incredibly useful tool that helps prevent your computer from going into sleep mode or activating a screensaver. It does this by simulating small, imperceptible movements of the mouse pointer, keeping your computer active and alert without disrupting your work flow. This feature is especially helpful for those who work in long stretches or for those who leave their computer on for extended periods of time, such as for download or rendering tasks. When the wiggle function is activated, the LED will begin to cycle through different colors, making it easy to know that the device is working.
 
 Connect the board via USB to your PC. It should be detected as a HID mouse. Activate/deactivate the wiggle function by pressing the touchkey. The NeoPixel lights up and changes colors when the function is activated.
 
 ## Rubber Ducky
-A rubber ducky is a small device that can be plugged into a computer just like a regular USB drive, and once plugged in, it can emulate a keyboard and inject keystrokes that can execute malicious code or exfiltrate data to the attacker. Of course, this version is completely harmless. It identifies itself as a USB HID keyboard and types a message when the touchkey is pressed. It can also be used to control the PC via keyboard shortcuts.
+A USB Rubber Ducky is a small device that looks like a regular USB drive. It can be plugged into a computer and once plugged in, it can emulate a keyboard and inject keystrokes that can execute malicious code or exfiltrate data to the attacker. However, this version of the rubber ducky is completely harmless. It identifies itself as a USB HID keyboard and types a predefined message when the touchkey is pressed. This can be used for various purposes like automating repetitive tasks, controlling the PC via keyboard shortcuts, and more. The included rubber ducky firmware can be reprogrammed to customize the keystrokes and messages according to your needs.
 
 Connect the board via USB to your PC. It should be detected as a HID keyboard. Open a text editor und press the touchkey on the board.
 
 ## CAPS bLOCK
-Tired of accidentally hitting the CAPS-LOCK key? It doesn't have to be. CAPS bLOCK identifies itself as a USB HID keyboard and constantly monitors the state of CAPS LOCK. It immediately deactivates it if it has been activated.
+Tired of accidentally hitting the CAPS LOCK key and typing everything in uppercase? CAPS bLOCK is here to help you. Once plugged in, it identifies itself as a USB HID keyboard and constantly monitors the state of the CAPS LOCK key. If it has been accidentally activated, it immediately deactivates it. The device is designed to work seamlessly in the background. When the blocking function is activated, the LED will begin to cycle through different colors, making it easy to know that the device is working.
 
 Connect the board via USB to your PC. It should be detected as a HID keyboard. Activate/deactivate the blocking function by pressing the touchkey. The NeoPixel lights up and changes colors when the function is activated.
 
-## NeoTouch
-Control the NeoPixel color by holding the touch key. It can be used as a simple USB light.
-
 ## TouchRaw
-TouchRaw can be used to calibrate the touchkey. It continuously transmits the touchkey raw sample values via USB-CDC-serial.
+TouchRaw is a powerful tool that allows you to fine-tune the sensitivity of the touchkey on your device. It works by transmitting the raw sample values of the touchkey to your PC via USB-CDC-serial connection. This allows you to see the exact values that the touchkey detection is producing in a serial monitor or serial plotter on your PC, and use them to determine the threshold values that are used in the configuration file (config.h).
 
 Connect the board via USB to your PC. It should be detected as a CDC device. Open a serial monitor or a serial plotter and select the correct serial port (BAUD rate doesn't matter). The touchkey raw sample values are continuously transmitted via CDC. Press and release the touchkey, observe the change in the raw values and use them to determine the threshold values for config.h. Windows users may need to use the [Zadig tool](https://zadig.akeo.ie/) to install the correct CDC driver.
+
+## NeoTouch
+NeoTouch is a tool that allows you to easily control the color of the NeoPixel LED on the board by simply holding down the touchkey. It is a simple way to add some color and customization to your computer setup. To change the color of the LED, simply hold down the touchkey and release it when you have reached the desired color. This allows for a smooth and seamless color transition, making it easy to match the LED to your personal preferences or to the color scheme of your computer setup. Additionally, NeoTouch can be used as a simple USB light, providing a convenient source of light in low-light situations.
 
 ## Compiling and Installing Firmware
 ### Installing Toolchain for CH55x
