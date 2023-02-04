@@ -38,12 +38,11 @@ NeoTouch is a tool that allows you to easily control the color of the NeoPixel L
 
 ## Compiling and Installing Firmware
 ### Installing Toolchain for CH55x
-Install the [CH55x Software Development Kit for the SDCC compiler](https://github.com/Blinkinlabs/ch554_sdcc). Follow the instructions on the website. In order for the programming tool and the I²C-Bridge software to work, Python3 must be installed on your system. To do this, follow these [instructions](https://www.pythontutorial.net/getting-started/install-python/). In addition [PyUSB](https://github.com/pyusb/pyusb) and [PySerial](https://github.com/pyserial/pyserial/) must be installed. On Linux (Debian-based), all of this can be done with the following commands:
+Install the [CH55x Software Development Kit for the SDCC compiler](https://github.com/Blinkinlabs/ch554_sdcc). Follow the instructions on the website. In order for the programming tool and the I²C-Bridge software to work, Python3 must be installed on your system. To do this, follow these [instructions](https://www.pythontutorial.net/getting-started/install-python/). In addition [PyUSB](https://github.com/pyusb/pyusb) must be installed. On Linux (Debian-based), all of this can be done with the following commands:
 
 ```
 sudo apt install sdcc python3 python3-pip
 sudo pip install pyusb
-sudo pip install pyserial
 ```
 
 ### Installing Drivers for the CH55x Bootloader
