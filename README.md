@@ -62,7 +62,7 @@ A brand new chip starts automatically in bootloader mode as soon as it is connec
 Open a terminal and navigate to the folder with the makefile. Run ```make flash``` to compile and upload the firmware. If you don't want to compile the firmware yourself, you can also upload the precompiled binary. To do this, just run ```python3 ./tools/chprog.py firmware.bin```.
 
 # References, Links and Notes
-1. [EasyEDA Design Files](https://oshwlab.com/wagiminator/ch552-usb2oled)
+1. [EasyEDA Design Files](https://oshwlab.com/wagiminator/ch552e-mouse-wiggler)
 2. [CH552 Datasheet](http://www.wch-ic.com/downloads/CH552DS1_PDF.html)
 3. [SDCC Compiler](https://sdcc.sourceforge.net/)
 4. [CH55x SDK for SDCC](https://github.com/Blinkinlabs/ch554_sdcc)
