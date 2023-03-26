@@ -42,6 +42,18 @@ __code USB_CFG_DESCR_CDC CfgDescr = {
     .MaxPower           = USB_MAX_POWER_mA / 2    // in 2mA units
   },
 
+  // Interface Association Descriptor
+  .association = {
+    .bLength            = sizeof(USB_IAD_DESCR),  // size of the descriptor in bytes
+    .bDescriptorType    = USB_DESCR_TYP_IAD,      // interf association descr: 0x0B
+    .bFirstInterface    = 0,                      // first interface
+    .bInterfaceCount    = 2,                      // total number of interfaces
+    .bFunctionClass     = USB_DEV_CLASS_COMM,     // function class: CDC (0x02)
+    .bFunctionSubClass  = 2,                      // 2: Abstract Control Model (ACM)
+    .bFunctionProtocol  = 1,                      // 1: AT command protocol
+    .iFunction          = 4                       // index of String Descriptor
+  },
+
   // Interface Descriptor: Interface 0 (CDC)
   .interface0 = {
     .bLength            = sizeof(USB_ITF_DESCR),  // size of the descriptor in bytes: 9
@@ -58,7 +70,7 @@ __code USB_CFG_DESCR_CDC CfgDescr = {
   // Functional Descriptors for Interface 0
   .functional = {
     0x05,0x24,0x00,0x10,0x01,                     // header functional descriptor
-    0x05,0x24,0x01,0x00,0x01,                     // call management functional descriptor
+    0x05,0x24,0x01,0x00,0x00,                     // call management functional descriptor
     0x04,0x24,0x02,0x02,                          // direct line management functional descriptor
     0x05,0x24,0x06,0x00,0x01                      // union functional descriptor: CDC IF0, Data IF1
   },
