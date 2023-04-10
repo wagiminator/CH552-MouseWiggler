@@ -1,5 +1,5 @@
 // ===================================================================================
-// Project:   Touchkey Calibrator for CH551, CH552 and CH554
+// Project:   Mouse Wiggler for CH551, CH552 and CH554
 // Version:   v1.1
 // Year:      2023
 // Author:    Stefan Wagner
@@ -10,7 +10,10 @@
 //
 // Description:
 // ------------
-// Continuously transmits touchkey raw sample values via USB-CDC for calibration.
+// Mouse Wiggler is a tool that simulates movements of the mouse pointer so that 
+// no screen saver is activated and the PC or notebook is not put to sleep. The
+// mouse pointer movements are imperceptibly small, so that you can continue to
+// work normally on your PC even with the function activated.
 //
 // References:
 // -----------
@@ -33,12 +36,9 @@
 //
 // Operating Instructions:
 // -----------------------
-// - Connect the board via USB to your PC. It should be detected as a CDC device.
-// - Open a serial monitor or a serial plotter and select the correct serial port
-//   (BAUD rate doesn't matter).
-// - The touchkey raw sample values are continuously transmitted via CDC.
-// - Press and release the touchkey, observe the change in the raw values and use
-//   them to determine the threshold values for config.h.
+// - Connect the board via USB to your PC. It should be detected as a HID mouse.
+// - Activate/deactivate the wiggle function by pressing the touchkey. The NeoPixel
+//   lights up when the function is activated.
 
 
 // ===================================================================================
@@ -47,10 +47,9 @@
 
 // Libraries
 #include "src/system.h"                   // system functions
-#include "src/delay.h"                    // delay functions
-#include "src/usb_cdc.h"                  // USB-CDC serial functions
 #include "src/touch.h"                    // touchkey functions
-#include <stdio.h>                        // for printf
+#include "src/neo.h"                      // NeoPixel functions
+#include "src/usb_mouse.h"                // USB HID mouse functions
 
 // Prototypes for used interrupts
 void USB_interrupt(void);
@@ -59,37 +58,39 @@ void USB_ISR(void) __interrupt(INT_NO_USB) {
 }
 
 // ===================================================================================
-// printf
-// ===================================================================================
-#define printf printf_tiny
-#define ALWAYS_PRINT_UNSIGNED
-
-#if SDCC < 370
-void putchar(char c) {
-  CDC_write(c);
-  if(c == '\n') CDC_flush();
-}
-#else
-int putchar(int c) {
-  CDC_write(c & 0xFF);
-  if(c == '\n') CDC_flush();
-  return c;
-}
-#endif
-
-// ===================================================================================
 // Main Function
 // ===================================================================================
 void main(void) {
+  // Variables
+  __bit activated = 1;                    // wiggling activated flag
+  uint8_t cnt = 0;                        // timing counter
+  uint8_t hue = 0;                        // hue cycle value
+
   // Setup
   CLK_config();                           // configure system clock
   DLY_ms(10);                             // wait for clock to settle
-  CDC_init();                             // init USB CDC
-  PIN_input(PIN_TOUCH);                   // set touchkey pin to input
+  MOUSE_init();                           // init USB HID mouse
+  DLY_ms(500);                            // wait for Windows
+  TOUCH_start(PIN_TOUCH);                 // start touchkey
+  NEO_init();                             // init NeoPixel
+  WDT_start();                            // start watchdog
 
   // Loop
   while(1) {
-    DLY_ms(250);
-    printf("Touchkey raw value: %u \n", TOUCH_sample(PIN_TOUCH));
+    if(activated) {                       // wiggling activated?
+      NEO_writeHue(hue, 0);               // set NeoPixel hue value
+      if(!hue--) hue = 191;               // cycle hue value
+      if(!--cnt) {                        // time to wiggle?
+        MOUSE_move( 1, 0);                // move mouse pointer just a tiny bit
+        MOUSE_move(-1, 0);                // move pointer back to where it was
+      }
+    }
+    if(TOUCH_pressed(PIN_TOUCH)) {        // touchkey pressed?
+      activated = !activated;             // toggle activated flag
+      if(!activated)                      // wiggling function deactivated?
+        NEO_writeColor(0, 0, 0);          // turn off NeoPixel
+    }
+    DLY_ms(50);                           // delay a little, also NeoPixel latch
+    WDT_reset();                          // reset watchdog
   }
 }
